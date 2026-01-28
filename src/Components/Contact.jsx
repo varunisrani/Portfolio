@@ -26,80 +26,109 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add your form submission logic here
     console.log("Form submitted:", formData);
-    // Clear the form after submission
     clearForm();
   };
 
   return (
-    <>
+    <div className="bg-slate-50 text-slate-900">
       <Navbar />
-      <div className="h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+      <section className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16">
         <motion.div
-          className="bg-white p-8 rounded-lg shadow-md"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, type: "spring" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="rounded-[32px] border border-slate-100 bg-white/90 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.05)]"
         >
-          <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
-            Contact Me
-          </h1>
-          <form onSubmit={handleSubmit}>
-            <motion.div
-              className="flex flex-col space-y-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, type: "spring" }}
-            >
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                required
-              />
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                value={formData.subject}
-                onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                value={formData.message}
-                onChange={handleChange}
-                rows="4"
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                required
-              ></textarea>
-              <motion.button
+          <p className="text-sm uppercase tracking-[0.4em] text-slate-500">Contact</p>
+          <h1 className="text-4xl font-bold text-slate-900">Let&apos;s build something calm &amp; confident.</h1>
+          <p className="mt-3 text-slate-600">
+            Share a project brief, team makeup, or timeline and I&apos;ll respond with ideas, next steps, and availability.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="grid gap-10 lg:grid-cols-2"
+        >
+          <div className="space-y-6 rounded-[28px] border border-slate-100 bg-white p-8 shadow-[0_30px_100px_rgba(15,23,42,0.07)]">
+            <h2 className="text-2xl font-semibold text-slate-900">Digital partner details</h2>
+            <p className="text-slate-600">
+              I collaborate remotely with product teams of 2–20 people, across MEA, Europe, and the US. Delivery focuses on clarity, polish, and measurable velocity.
+            </p>
+            <ul className="space-y-3 text-sm text-slate-500">
+              <li>• Available for 1:1 consultations, sprints, and long-term retainers.</li>
+              <li>• Delivery: Figma to React, polished interactions, accessibility-first.</li>
+              <li>• Tools: Vite, Framer Motion, Tailwind, Redux Toolkit.</li>
+            </ul>
+            <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.4em] text-slate-400">
+              <span>Remote-first</span>
+              <span>UTC +5:30 base</span>
+              <span>Responsive within 24h</span>
+            </div>
+          </div>
+
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-[28px] border border-slate-100 bg-white p-8 shadow-[0_30px_120px_rgba(15,23,42,0.05)]"
+          >
+            <div className="space-y-4">
+              <label className="block text-sm font-semibold text-slate-700">
+                Name
+                <input
+                  required
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                />
+              </label>
+              <label className="block text-sm font-semibold text-slate-700">
+                Email
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                />
+              </label>
+              <label className="block text-sm font-semibold text-slate-700">
+                Subject
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                />
+              </label>
+              <label className="block text-sm font-semibold text-slate-700">
+                Message
+                <textarea
+                  required
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={5}
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                />
+              </label>
+              <button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+                className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-slate-800"
               >
-                Submit
-              </motion.button>
-            </motion.div>
+                Send message
+              </button>
+            </div>
           </form>
         </motion.div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 
