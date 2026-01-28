@@ -1,93 +1,108 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+const navLinks = [
+  { label: "Home", to: "/" },
+  { label: "Project", to: "/project" },
+  { label: "Services", to: "/services" },
+  { label: "Contact", to: "/contact" },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white font-bold text-2xl">
-          Portfolio
-        </Link>
+    <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+        <NavLink to="/" className="text-2xl font-semibold tracking-wide text-slate-900">
+          Varun Israni
+        </NavLink>
 
-        {/* Mobile Menu Icon */}
-        <div className="md:hidden">
-          <button
-            className="text-white text-xl focus:outline-none"
-            onClick={toggleMenu}
+        <nav className="hidden items-center space-x-6 md:flex">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive ? "text-indigo-600" : "text-slate-500 hover:text-slate-900"
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="hidden items-center space-x-4 md:flex">
+          <a
+            href="https://www.linkedin.com/in/varun-israni-a21022261/?originalSubdomain=in"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-800 hover:text-slate-900 transition"
           >
-            {isOpen ? "Close" : "Menu"}
-          </button>
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/rcout328"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-slate-900/30 transition hover:bg-slate-800"
+          >
+            GitHub
+          </a>
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-gradient-to-r from-blue-500 to-purple-500 border-t border-gray-700">
-            <ul className="text-center py-4">
-              <li>
-                <Link
-                  to="/"
-                  className="block py-3 text-white hover:text-gray-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/project"
-                  className="block py-3 text-white hover:text-gray-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Project
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/services"
-                  className="block py-3 text-white hover:text-gray-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className="block py-3 text-white hover:text-gray-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact
-                </Link>
-              </li>
-              {/* Add more navigation links as needed */}
-            </ul>
-          </div>
-        )}
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4">
-          <Link to="/" className="text-white hover:text-gray-300">
-            Home
-          </Link>
-          <Link to="/project" className="text-white hover:text-gray-300">
-            Project
-          </Link>
-          <Link to="/services" className="text-white hover:text-gray-300">
-            Services
-          </Link>
-          <Link to="/contact" className="text-white hover:text-gray-300">
-            Contact
-          </Link>
-          {/* Add more navigation links as needed */}
-        </div>
+        <button
+          className="inline-flex items-center rounded-full border border-slate-200 px-3 py-2 text-sm font-medium text-slate-500 hover:text-slate-900 md:hidden"
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label="Toggle navigation"
+        >
+          {open ? "Close" : "Menu"}
+        </button>
       </div>
-    </nav>
+
+      {open && (
+        <div className="border-t border-slate-100 bg-white/95 md:hidden">
+          <nav className="space-y-2 px-6 py-4">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `block rounded-2xl px-4 py-2 text-sm font-medium ${
+                    isActive
+                      ? "bg-indigo-50 text-indigo-600"
+                      : "text-slate-600 hover:bg-slate-100"
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            <div className="flex flex-col gap-2 pt-4">
+              <a
+                href="https://www.linkedin.com/in/varun-israni-a21022261/?originalSubdomain=in"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:border-slate-800"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/rcout328"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-slate-900 px-4 py-2 text-left text-sm font-medium text-white shadow-lg shadow-slate-900/30"
+              >
+                GitHub
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 };
 
