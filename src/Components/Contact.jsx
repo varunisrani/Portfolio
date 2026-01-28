@@ -2,6 +2,16 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { when: "beforeChildren", staggerChildren: 0.15 } },
+};
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,89 +26,94 @@ const ContactForm = () => {
   };
 
   const clearForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add your form submission logic here
     console.log("Form submitted:", formData);
-    // Clear the form after submission
     clearForm();
   };
 
   return (
     <>
       <Navbar />
-      <div className="h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-        <motion.div
-          className="bg-white p-8 rounded-lg shadow-md"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, type: "spring" }}
-        >
-          <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
-            Contact Me
-          </h1>
-          <form onSubmit={handleSubmit}>
-            <motion.div
-              className="flex flex-col space-y-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, type: "spring" }}
-            >
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                required
-              />
+      <motion.main
+        className="min-h-screen bg-black text-white px-4 sm:px-6 py-12"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <div className="max-w-3xl mx-auto space-y-6">
+          <motion.section className="section-card" variants={fadeIn}>
+            <p className="contact-lede">Contact</p>
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+              Let's build a monochrome experience together
+            </h1>
+            <p className="hero-note">
+              Drop a note if you need a high-contrast interface, tooling portal, or automation shell with sharp outlines and crisp typography.
+            </p>
+            <div className="hero-actions">
+              <a className="outline-button" href="mailto:hello@varunisrani.dev">
+                Email directly
+              </a>
+              <button type="button" className="bw-button button-ok">
+                Ok
+              </button>
+            </div>
+          </motion.section>
+
+          <motion.section className="section-card contact-panel" variants={fadeIn}>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="contact-field"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="contact-field"
+                  required
+                />
+              </div>
               <input
                 type="text"
                 name="subject"
                 placeholder="Subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                className="contact-field"
               />
               <textarea
                 name="message"
                 placeholder="Your Message"
                 value={formData.message}
                 onChange={handleChange}
-                rows="4"
-                className="px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                rows="5"
+                className="contact-field contact-textarea"
                 required
-              ></textarea>
+              />
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="outline-button w-full justify-center"
               >
                 Submit
               </motion.button>
-            </motion.div>
-          </form>
-        </motion.div>
-      </div>
+            </form>
+          </motion.section>
+        </div>
+      </motion.main>
     </>
   );
 };
